@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+public
+.husky
+.vscode
+*.png
+*.svg
+*.jpg
+*.jpeg
