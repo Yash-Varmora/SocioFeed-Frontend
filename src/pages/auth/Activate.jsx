@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import api from '../api/axiosInstance';
 import { toast } from 'react-toastify';
+import api from '../../api/axiosInstance';
 
 const Activate = () => {
   const [searchParams] = useSearchParams();

@@ -1,8 +1,5 @@
 import Home from './Home';
-import Login from './Login';
-import Register from './Register';
-import Activate from './Activate';
-import ForgotPassword from './ForgotPassword';
-import ResetPassword from './ResetPassword';
+import { Login, Activate, ForgotPassword, Register, ResetPassword } from './auth';
+import { Profile } from './profile';
 
-export { Home, Login, Register, Activate, ForgotPassword, ResetPassword };
+export { Home, Login, Register, Activate, ForgotPassword, ResetPassword, Profile };
