@@ -1,20 +1,37 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Login, Register, Activate, ForgotPassword, ResetPassword } from './pages';
+import { BrowserRouter } from 'react-router-dom';
 import Toast from './components/common/Toast';
+import useAuthCheck from './hooks/useAuthCheck';
+import { Box, CircularProgress, CssBaseline } from '@mui/material';
+import { useSelector } from 'react-redux';
+import Sidebar from './components/sidebar/Sidebar';
+import AppRoutes from './routes/AppRoutes';
 
 const App = () => {
+  const { isLoading } = useAuthCheck();
+  const { user } = useSelector((state) => state.auth);
+
+  if (isLoading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <BrowserRouter>
+      <CssBaseline />
       <Toast />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/activate" element={<Activate />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-      </Routes>
+      <Box sx={{ display: 'flex' }}>
+        {user && <Sidebar />}
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: { xs: 2, sm: 3 }, transition: 'margin 0.3s ease-in-out' }}
+        >
+          <AppRoutes />
+        </Box>
+      </Box>
     </BrowserRouter>
   );
 };

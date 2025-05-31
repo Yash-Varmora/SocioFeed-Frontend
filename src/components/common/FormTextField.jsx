@@ -1,12 +1,13 @@
 import { TextField } from '@mui/material';
 import React from 'react';
 
-const FormTextField = ({ label, register, name, error, type = 'text' }) => {
+const FormTextField = ({ label, register, name, error, type = 'text', multiline = false }) => {
   return (
     <TextField
       label={label}
       fullWidth
-      type={type}
+      multiline={multiline}
+      type={!multiline ? type : undefined}
       {...register(name)}
       error={!!error}
       helperText={error?.message}

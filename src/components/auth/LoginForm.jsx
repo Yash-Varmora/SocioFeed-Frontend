@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../store/slices/authSlice';
-import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import Form from './Form';
 import { loginSchema } from '../../schemas/authSchemas';
@@ -16,9 +15,7 @@ const LoginForm = ({ onSuccess }) => {
   const handleLogin = async (data) => {
     try {
       const response = await loginUser(data);
-      console.log(response);
       dispatch(setCredentials({ user: response.data }));
-      Cookies.set('isLoggedIn', 'true', { expires: 7 });
       toast.success('Login successful!');
       onSuccess();
     } catch (error) {

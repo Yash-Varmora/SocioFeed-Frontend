@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import FormTextField from './FormTextField';
+import FormTextField from '../common/FormTextField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 

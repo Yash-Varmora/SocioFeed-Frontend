@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import Cookies from 'js-cookie';
 import { setCredentials } from '../store/slices/authSlice';
 import { googleLogin } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +18,6 @@ export const useGoogleLoginHandler = () => {
         }),
       );
 
-      Cookies.set('isLoggedIn', 'true', { expires: 7 });
       toast.success('Google login successful!');
       navigate('/');
     } catch (error) {
