@@ -1,6 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Activate, ForgotPassword, Home, Login, Profile, Register, ResetPassword } from '../pages';
+import {
+  Activate,
+  ForgotPassword,
+  Home,
+  Login,
+  Profile,
+  Register,
+  ResetPassword,
+  Search,
+} from '../pages';
 import RestrictedRoute from './RestrictedRoute';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -10,6 +19,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/search" element={<Search />} />
       </Route>
       <Route element={<RestrictedRoute />}>
         <Route path="/login" element={<Login />} />

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import useLogout from '../../hooks/useLogout';
 import SidebarHeader from './SidebarHeader';
 import SidebarItem from './SidebarItem';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaSearch } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 import { AVATAR_URL } from '../../constants';
 
@@ -37,6 +37,11 @@ const Sidebar = () => {
         />
       ),
       onClick: () => navigate(`/profile/${user?.username}`),
+    },
+    {
+      label: 'Search',
+      icon: <FaSearch size={28} />,
+      onClick: () => navigate('/search'),
     },
     {
       label: 'Logout',
