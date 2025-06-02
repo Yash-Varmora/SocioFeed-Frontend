@@ -9,14 +9,14 @@ export const useProfileData = (username, navigate) => {
     queryKey: ['profile', username],
     queryFn: () => getProfile(username).then((res) => res.data),
     enabled: !!username,
+    onSuccess: () => console.log('useProfileData query succeeded for:', username),
+    onError: (err) => console.error('useProfileData query failed:', err),
   });
 
   const updateMutation = useMutation({
     mutationFn: updateProfile,
     onSuccess: (data) => {
-      console.log(data);
       const newUsername = data.data.username;
-      console.log(newUsername);
       queryClient.setQueryData(['profile', newUsername], (oldData) => ({
         ...oldData,
         ...data.data,

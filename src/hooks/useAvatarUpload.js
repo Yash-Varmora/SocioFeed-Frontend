@@ -13,8 +13,11 @@ export const useAvatarUpload = (username, onUploadSuccess) => {
         const percent = Math.round((e.loaded * 100) / e.total);
         setUploadProgress(percent);
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['profile', username]);
+    onSuccess: (data) => {
+      queryClient.setQueryData(['profile', username], (oldData) => ({
+        ...oldData,
+        avatarUrl: data.data.avatarUrl,
+      }));
       toast.success('Avatar uploaded!');
       setUploadProgress(0);
       onUploadSuccess();

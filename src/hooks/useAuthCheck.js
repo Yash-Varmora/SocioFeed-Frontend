@@ -8,21 +8,19 @@ function useAuthCheck() {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['currentUser'],
     queryFn: () => getUser().then((res) => res.data),
     enabled: isLoggedIn,
     retry: false,
+    onError: (err) => console.error('useAuthCheck query failed:', err),
   });
 
   useEffect(() => {
     if (data) {
       dispatch(setCredentials({ user: data }));
     }
-    if (error) {
-      console.error('Auth check failed:', error);
-    }
-  }, [data, error, dispatch]);
+  }, [data, dispatch]);
 
   return { isLoading };
 }

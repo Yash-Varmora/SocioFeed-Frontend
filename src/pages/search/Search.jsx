@@ -51,7 +51,7 @@ const Search = () => {
         <>
           <List>
             {users.map((user) => (
-              <ListItem key={user.id} button onClick={() => handleUserClick(user.username)}>
+              <ListItem key={user.id} button="true" onClick={() => handleUserClick(user.username)}>
                 <ListItemAvatar>
                   <Avatar src={user.avatarUrl || AVATAR_URL} alt={user.username} />
                 </ListItemAvatar>

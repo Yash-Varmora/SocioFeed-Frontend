@@ -14,3 +14,8 @@ export const searchUsers = async ({ query, page }) => {
   const response = await api.post(`/users/search?page=${page}`, { query });
   return response.data;
 };
+
+export const fetchMutualFriends = async (username) => {
+  const response = await api.get(`/users/${username}/mutual-friends`);
+  return response.data;
+};

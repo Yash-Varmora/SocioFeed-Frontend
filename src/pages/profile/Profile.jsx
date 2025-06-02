@@ -8,11 +8,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { profileSchema } from '../../schemas/profileSchema';
 import { useDropzone } from 'react-dropzone';
 import ProfileHeader from '../../components/profile/ProfileHeader';
-import { Button } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import ProfileForm from '../../components/profile/ProfileForm';
 import CropDialog from '../../components/profile/CropDialog';
 import { toast } from 'react-toastify';
 import ProfilePictureForm from '../../components/profile/ProfilePictureForm';
+import useMutualFriends from '../../hooks/useMutualFriends';
+import useFollow from '../../hooks/useFollow';
 
 const Profile = () => {
   const { username } = useParams();
@@ -33,6 +45,12 @@ const Profile = () => {
   const { uploadMutation, uploadProgress } = useAvatarUpload(username, () =>
     setIsEditingPicture(false),
   );
+
+  const { mutualFriends, isLoading: mutualFriendsLoading } = useMutualFriends(
+    username,
+    isOwnProfile,
+  );
+  const { follow, unfollow, isFollowing } = useFollow(profile?.id, username);
 
   const {
     register,
@@ -108,6 +126,16 @@ const Profile = () => {
     return <div className="text-center mt-8 text-red-500">Error: {error.message}</div>;
   }
 
+  if (!profile) {
+    return <div className="text-center mt-8">Profile not found</div>;
+  }
+
+  const handleMutualFriendClick = (friendUsername) => {
+    navigate(`/profile/${friendUsername}`);
+  };
+
+  const isFollowingUser = profile.followsFollowing?.some((f) => f.followerId === user?.id);
+
   return (
     <div className="container mx-auto p-4 max-w-2xl">
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -119,6 +147,24 @@ const Profile = () => {
           followers={profile.totalFollowers}
           following={profile.totalFollowing}
         />
+        {!isOwnProfile && (
+          <Box sx={{ mt: 4 }}>
+            <Button
+              variant="contained"
+              color={isFollowingUser ? 'secondary' : 'primary'}
+              onClick={isFollowingUser ? unfollow : follow}
+              disabled={isFollowing}
+            >
+              {isFollowing ? (
+                <CircularProgress size={24} />
+              ) : isFollowingUser ? (
+                'Unfollow'
+              ) : (
+                'Follow'
+              )}
+            </Button>
+          </Box>
+        )}
         {isOwnProfile && (
           <div className="mt-4 space-x-2">
             <Button
@@ -149,6 +195,36 @@ const Profile = () => {
             onSubmit={handleFormSubmit}
             isLoading={updateMutation.isLoading}
           />
+        )}
+        {!isOwnProfile && (
+          <Box sx={{ mt: 4 }}>
+            <Typography variant="h6" gutterBottom>
+              Mutual Friends
+            </Typography>
+            {mutualFriendsLoading ? (
+              <CircularProgress />
+            ) : mutualFriends.length > 0 ? (
+              <List>
+                {mutualFriends.map((friend) => (
+                  <ListItem
+                    key={friend.id}
+                    button
+                    onClick={() => handleMutualFriendClick(friend.username)}
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                        src={friend.avatarUrl || '/default-avatar.png'}
+                        alt={friend.username}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText primary={friend.username} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <Typography color="text.secondary">No mutual friends</Typography>
+            )}
+          </Box>
         )}
         {isEditingPicture && isOwnProfile && (
           <ProfilePictureForm
