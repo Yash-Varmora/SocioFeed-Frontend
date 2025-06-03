@@ -1,40 +1,47 @@
 import { useEffect, useState } from 'react';
 import { searchUsers } from '../services/userService';
 import { toast } from 'react-toastify';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 const useSearchUsers = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(searchQuery);
-      setPage(1);
     }, 500);
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['searchUsers', debouncedQuery, page],
-    queryFn: () => searchUsers({ query: debouncedQuery, page }).then((res) => res.data),
-    enabled: !!debouncedQuery,
-    retry: false,
-  });
+  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['searchUsers', debouncedQuery],
+      queryFn: ({ pageParam = 1 }) =>
+        searchUsers({ query: debouncedQuery, page: pageParam }).then((res) => res.data),
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1;
+        return nextPage <= lastPage.pages ? nextPage : undefined;
+      },
+      enabled: !!debouncedQuery,
+      retry: false,
+    });
 
   if (error) {
     toast.error(error.response?.data?.error || 'Failed to search users');
   }
+
+  const allUsers = data?.pages.flatMap((page) => page.users) || [];
   return {
     searchQuery,
     setSearchQuery,
-    users: data?.users || [],
+    users: allUsers,
     isLoading,
-    page,
-    setPage,
-    total: data?.total || 0,
-    pages: data?.pages || 1,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    total: data?.pages[0]?.total || 0,
+    pages: data?.pages[0]?.pages || 1,
   };
 };
 

@@ -15,7 +15,17 @@ export const searchUsers = async ({ query, page }) => {
   return response.data;
 };
 
-export const fetchMutualFriends = async (username) => {
-  const response = await api.get(`/users/${username}/mutual-friends`);
+export const fetchFollowers = async ({ username, page }) => {
+  const response = await api.get(`/users/${username}/followers?page=${page}`);
+  return response.data;
+};
+
+export const fetchFollowing = async ({ username, page }) => {
+  const response = await api.get(`/users/${username}/following?page=${page}`);
+  return response.data;
+};
+
+export const fetchMutualFriends = async ({ username, page }) => {
+  const response = await api.get(`/users/${username}/mutual-friends?page=${page}`);
   return response.data;
 };

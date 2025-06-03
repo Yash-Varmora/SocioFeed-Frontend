@@ -1,7 +1,8 @@
 import React from 'react';
 import { AVATAR_URL } from '../../constants';
+import { Box, Typography } from '@mui/material';
 
-const ProfileHeader = ({ avatarUrl, username, email, bio, followers, following }) => {
+const ProfileHeader = ({ avatarUrl, username, email, bio, followers, following, openModal }) => {
   return (
     <div className="flex items-center space-x-4">
       <img
@@ -10,12 +11,28 @@ const ProfileHeader = ({ avatarUrl, username, email, bio, followers, following }
         className="w-24 h-24 rounded-full object-cover"
       />
       <div>
-        <h1 className="text-2xl font-bold">{username}</h1>
-        <p className="text-gray-600">{email}</p>
-        <p className="text-gray-600">{bio || 'No bio yet'}</p>
-        <p className="text-gray-600">
-          Followers: {followers} | Following: {following}
-        </p>
+        <Typography variant="h5" fontWeight="bold">
+          {username}
+        </Typography>
+        <Typography color="text.secondary">{email}</Typography>
+        <Typography>{bio || 'No bio yet'}</Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Typography
+            color="text.secondary"
+            sx={{ cursor: 'pointer' }}
+            onClick={() => openModal('followers')}
+          >
+            Followers: {followers}
+          </Typography>
+          |
+          <Typography
+            color="text.secondary"
+            sx={{ cursor: 'pointer' }}
+            onClick={() => openModal('following')}
+          >
+            Following: {following}
+          </Typography>
+        </Box>
       </div>
     </div>
   );

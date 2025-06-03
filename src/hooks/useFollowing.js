@@ -1,29 +1,26 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { fetchFollowing } from '../services/userService';
 import { toast } from 'react-toastify';
-import { fetchMutualFriends } from '../services/userService';
 
-function useMutualFriends(username, isOwnProfile) {
+function useFollowing(username) {
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ['mutualFriends', username],
+      queryKey: ['following', username],
       queryFn: ({ pageParam = 1 }) =>
-        fetchMutualFriends({ username, page: pageParam }).then((res) => res.data),
+        fetchFollowing({ username, page: pageParam }).then((res) => res.data),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
         return nextPage <= lastPage.pages ? nextPage : undefined;
       },
-      enabled: !isOwnProfile,
       staleTime: 5 * 60 * 1000,
-      onError: () => console.log('Mutual friends error for:', username),
     });
 
   if (error) {
-    console.log('Mutual friends error for:', username, error);
-    toast.error(error.response?.data?.error || 'Failed to fetch mutual friends');
+    toast.error(error.response?.data?.error || 'Failed to fetch following');
   }
-  const allMutualFriends = data?.pages.flatMap((page) => page.mutualFriends) || [];
+  const allFollowing = data?.pages.flatMap((page) => page.following) || [];
   return {
-    mutualFriends: allMutualFriends,
+    following: allFollowing,
     isLoading,
     fetchNextPage,
     hasNextPage,
@@ -33,4 +30,4 @@ function useMutualFriends(username, isOwnProfile) {
   };
 }
 
-export default useMutualFriends;
+export default useFollowing;

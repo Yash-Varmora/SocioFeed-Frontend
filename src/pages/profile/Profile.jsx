@@ -25,6 +25,8 @@ import { toast } from 'react-toastify';
 import ProfilePictureForm from '../../components/profile/ProfilePictureForm';
 import useMutualFriends from '../../hooks/useMutualFriends';
 import useFollow from '../../hooks/useFollow';
+import Modal from '../../components/follow/Modal';
+import { AVATAR_URL } from '../../constants';
 
 const Profile = () => {
   const { username } = useParams();
@@ -40,6 +42,8 @@ const Profile = () => {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [openCropDialog, setOpenCropDialog] = useState(false);
+  const [socialModalOpen, setSocialModalOpen] = useState(false);
+  const [socialModalTab, setSocialModalTab] = useState('followers');
 
   const { profile, isLoading, error, updateMutation } = useProfileData(username, navigate);
   const { uploadMutation, uploadProgress } = useAvatarUpload(username, () =>
@@ -134,6 +138,11 @@ const Profile = () => {
     navigate(`/profile/${friendUsername}`);
   };
 
+  const openSocialModal = (tab) => {
+    setSocialModalTab(tab);
+    setSocialModalOpen(true);
+  };
+
   const isFollowingUser = profile.followsFollowing?.some((f) => f.followerId === user?.id);
 
   return (
@@ -146,6 +155,7 @@ const Profile = () => {
           bio={profile.bio}
           followers={profile.totalFollowers}
           following={profile.totalFollowing}
+          openModal={(tab) => openSocialModal(tab)}
         />
         {!isOwnProfile && (
           <Box sx={{ mt: 4 }}>
@@ -204,23 +214,32 @@ const Profile = () => {
             {mutualFriendsLoading ? (
               <CircularProgress />
             ) : mutualFriends.length > 0 ? (
-              <List>
-                {mutualFriends.map((friend) => (
-                  <ListItem
-                    key={friend.id}
-                    button
-                    onClick={() => handleMutualFriendClick(friend.username)}
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        src={friend.avatarUrl || '/default-avatar.png'}
-                        alt={friend.username}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText primary={friend.username} />
-                  </ListItem>
-                ))}
-              </List>
+              <>
+                <List>
+                  {mutualFriends.slice(0, 2).map((friend) => (
+                    <ListItem
+                      key={friend.id}
+                      button="true"
+                      onClick={() => handleMutualFriendClick(friend.username)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar src={friend.avatarUrl || AVATAR_URL} alt={friend.username} />
+                      </ListItemAvatar>
+                      <ListItemText primary={friend.username} />
+                    </ListItem>
+                  ))}
+                </List>
+                {mutualFriends.length > 2 && (
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
+                    and {mutualFriends.length - 2} others
+                  </Typography>
+                )}
+                <Box sx={{ textAlign: 'center', my: 2 }}>
+                  <Button variant="contained" onClick={() => openSocialModal('mutualFriends')}>
+                    view Mutual Friends
+                  </Button>
+                </Box>
+              </>
             ) : (
               <Typography color="text.secondary">No mutual friends</Typography>
             )}
@@ -249,6 +268,13 @@ const Profile = () => {
         setZoom={setZoom}
         onCropComplete={onCropComplete}
         onUpload={handleCrop}
+      />
+      <Modal
+        open={socialModalOpen}
+        onClose={() => setSocialModalOpen(false)}
+        username={username}
+        initialTab={socialModalTab}
+        isOwnProfile={isOwnProfile}
       />
     </div>
   );

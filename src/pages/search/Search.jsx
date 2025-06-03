@@ -17,16 +17,15 @@ import { AVATAR_URL } from '../../constants';
 
 const Search = () => {
   const navigate = useNavigate();
-  const { searchQuery, setSearchQuery, users, isLoading, page, setPage, total, pages } =
+  const { searchQuery, setSearchQuery, users, isLoading, fetchNextPage, hasNextPage, total } =
     useSearchUsers();
-
   const handleUserClick = (username) => {
     navigate(`/profile/${username}`);
   };
 
   const handleLoadMore = () => {
-    if (page < pages) {
-      setPage(page + 1);
+    if (hasNextPage) {
+      fetchNextPage();
     }
   };
 
@@ -43,7 +42,7 @@ const Search = () => {
         placeholder="Enter username..."
         sx={{ mb: 3 }}
       />
-      {isLoading && page === 1 ? (
+      {isLoading ? (
         <Box sx={{ textAlign: 'center' }}>
           <CircularProgress />
         </Box>
@@ -59,7 +58,7 @@ const Search = () => {
               </ListItem>
             ))}
           </List>
-          {page < pages && (
+          {hasNextPage && (
             <Box sx={{ textAlign: 'center', mt: 2 }}>
               <Button variant="contained" onClick={handleLoadMore} disabled={isLoading}>
                 {isLoading ? <CircularProgress size={24} /> : 'Load More'}
