@@ -45,6 +45,7 @@ const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
       <DialogContent>
         <UserList
           {...getTabData()}
+          currentProfileUsername={username}
           isOwnProfile={isOwnProfile}
           onUserClick={(username) => {
             onClose();

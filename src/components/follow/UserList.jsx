@@ -12,6 +12,7 @@ const UserList = ({
   hasNextPage,
   isFetchingNextPage,
   total,
+  currentProfileUsername,
   isOwnProfile,
   onUserClick,
 }) => {
@@ -27,7 +28,12 @@ const UserList = ({
     <Box>
       <List>
         {users.map((user) => (
-          <UserListItem key={user.id} user={user} onUserClick={onUserClick} />
+          <UserListItem
+            key={user.id}
+            user={user}
+            onUserClick={onUserClick}
+            currentProfileUsername={currentProfileUsername}
+          />
         ))}
       </List>
 

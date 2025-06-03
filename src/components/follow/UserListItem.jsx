@@ -11,9 +11,13 @@ import useFollow from '../../hooks/useFollow';
 import { AVATAR_URL } from '../../constants';
 import { useSelector } from 'react-redux';
 
-const UserListItem = ({ user, onUserClick }) => {
+const UserListItem = ({ user, onUserClick, currentProfileUsername }) => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { follow, unfollow, isFollowing } = useFollow(user.id, user.username);
+  const { follow, unfollow, isFollowing } = useFollow(
+    user.id,
+    user.username,
+    currentProfileUsername,
+  );
 
   const isFollowingUser =
     user.followsFollowing?.some((f) => f.followerId === currentUser?.id) || false;

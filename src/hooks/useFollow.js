@@ -3,7 +3,7 @@ import { followUser, unfollowUser } from '../services/followService';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
-function useFollow(followedId, username) {
+function useFollow(followedId, username, currentProfileUsername) {
   const queryClient = useQueryClient();
   const user = useSelector((state) => state.auth.user);
 
@@ -115,9 +115,11 @@ function useFollow(followedId, username) {
         };
       });
 
-      queryClient.invalidateQueries({ queryKey: ['followers', user.username] });
-      queryClient.invalidateQueries({ queryKey: ['following', user.username] });
-      queryClient.invalidateQueries({ queryKey: ['mutualFriends', user.username] });
+      if (user.username !== currentProfileUsername) {
+        queryClient.invalidateQueries({ queryKey: ['followers', user.username] });
+        queryClient.invalidateQueries({ queryKey: ['following', user.username] });
+        queryClient.invalidateQueries({ queryKey: ['mutualFriends', user.username] });
+      }
       queryClient.invalidateQueries({ queryKey: ['profile', user.username] });
 
       toast.success('Followed successfully');
@@ -240,7 +242,7 @@ function useFollow(followedId, username) {
         };
       });
 
-      if (user.username !== username) {
+      if (user.username !== currentProfileUsername) {
         queryClient.invalidateQueries({ queryKey: ['following', user.username] });
       }
       queryClient.invalidateQueries({ queryKey: ['profile', user.username] });
