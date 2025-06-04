@@ -12,7 +12,6 @@ function useFollowing(username) {
         const nextPage = allPages.length + 1;
         return nextPage <= lastPage.pages ? nextPage : undefined;
       },
-      staleTime: 5 * 60 * 1000,
     });
 
   if (error) {

@@ -16,7 +16,7 @@ const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
     if (initialTab) {
       setTab(initialTab);
     }
-  }, [initialTab]);
+  }, [initialTab, username]);
 
   const followersData = useFollowers(username);
   const followingData = useFollowing(username);

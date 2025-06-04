@@ -2,10 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { uploadAvatar } from '../services/profileService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../store/slices/authSlice';
 
 export const useAvatarUpload = (username, onUploadSuccess) => {
   const queryClient = useQueryClient();
   const [uploadProgress, setUploadProgress] = useState(0);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const uploadMutation = useMutation({
     mutationFn: ({ formData }) =>
@@ -19,6 +23,14 @@ export const useAvatarUpload = (username, onUploadSuccess) => {
         avatarUrl: data.data.avatarUrl,
       }));
       toast.success('Avatar uploaded!');
+      dispatch(
+        setCredentials({
+          user: {
+            ...user,
+            avatarUrl: data.data.avatarUrl,
+          },
+        }),
+      );
       setUploadProgress(0);
       onUploadSuccess();
     },

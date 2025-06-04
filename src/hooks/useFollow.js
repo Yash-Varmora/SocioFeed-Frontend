@@ -116,9 +116,9 @@ function useFollow(followedId, username, currentProfileUsername) {
       });
 
       if (user.username !== currentProfileUsername) {
-        queryClient.invalidateQueries({ queryKey: ['followers', user.username] });
         queryClient.invalidateQueries({ queryKey: ['following', user.username] });
         queryClient.invalidateQueries({ queryKey: ['mutualFriends', user.username] });
+        queryClient.invalidateQueries({ queryKey: ['followers', user.username] });
       }
       queryClient.invalidateQueries({ queryKey: ['profile', user.username] });
 

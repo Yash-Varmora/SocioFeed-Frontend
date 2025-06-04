@@ -13,7 +13,6 @@ function useMutualFriends(username, isOwnProfile) {
         return nextPage <= lastPage.pages ? nextPage : undefined;
       },
       enabled: !isOwnProfile,
-      staleTime: 5 * 60 * 1000,
       onError: () => console.log('Mutual friends error for:', username),
     });
 
