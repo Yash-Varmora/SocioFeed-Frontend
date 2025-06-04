@@ -7,9 +7,11 @@ import UserList from './UserList';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CustomTabs from './CustomTabs';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [tab, setTab] = useState(initialTab);
 
   useEffect(() => {
@@ -26,6 +28,14 @@ const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
     toast.error(mutualFriendsData.error.response?.data?.error || 'Failed to fetch mutual friends');
   }
 
+  const handleClose = () => {
+    if (isOwnProfile) {
+      queryClient.invalidateQueries({ queryKey: ['followers', username] });
+      queryClient.invalidateQueries({ queryKey: ['following', username] });
+    }
+    onClose();
+  };
+
   const getTabData = () => {
     switch (tab) {
       case 'followers':
@@ -39,7 +49,7 @@ const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
     }
   };
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>Friends</DialogTitle>
       <CustomTabs tab={tab} setTab={setTab} isOwnProfile={isOwnProfile} />
       <DialogContent>

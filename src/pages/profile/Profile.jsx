@@ -271,7 +271,9 @@ const Profile = () => {
       />
       <Modal
         open={socialModalOpen}
-        onClose={() => setSocialModalOpen(false)}
+        onClose={() => {
+          setSocialModalOpen(false);
+        }}
         username={username}
         initialTab={socialModalTab}
         isOwnProfile={isOwnProfile}
