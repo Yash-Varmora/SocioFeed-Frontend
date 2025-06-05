@@ -13,10 +13,12 @@ const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [tab, setTab] = useState(initialTab);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     if (initialTab) {
       setTab(initialTab);
+      setSearch('');
     }
   }, [initialTab, username]);
 
@@ -61,6 +63,8 @@ const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
             onClose();
             navigate(`/profile/${username}`);
           }}
+          search={search}
+          setSearch={setSearch}
         />
       </DialogContent>
     </Dialog>

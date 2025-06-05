@@ -3,7 +3,7 @@ import { searchUsers } from '../services/userService';
 import { toast } from 'react-toastify';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const useSearchUsers = () => {
+const useSearchUsers = (limit = 2) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
 
@@ -18,7 +18,7 @@ const useSearchUsers = () => {
     useInfiniteQuery({
       queryKey: ['searchUsers', debouncedQuery],
       queryFn: ({ pageParam = 1 }) =>
-        searchUsers({ query: debouncedQuery, page: pageParam }).then((res) => res.data),
+        searchUsers({ query: debouncedQuery, page: pageParam, limit }).then((res) => res.data),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
         return nextPage <= lastPage.pages ? nextPage : undefined;

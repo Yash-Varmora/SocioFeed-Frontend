@@ -5,6 +5,7 @@ import {
   ForgotPassword,
   Home,
   Login,
+  Notifications,
   Profile,
   Register,
   ResetPassword,
@@ -20,6 +21,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Route>
       <Route element={<RestrictedRoute />}>
         <Route path="/login" element={<Login />} />

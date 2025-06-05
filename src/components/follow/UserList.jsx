@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, List, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, List, TextField, Typography } from '@mui/material';
 import React from 'react';
 import UserListItem from './UserListItem';
 
@@ -15,8 +15,13 @@ const UserList = ({
   currentProfileUsername,
   isOwnProfile,
   onUserClick,
+  search,
+  setSearch,
 }) => {
   const users = type === 'followers' ? followers : type === 'following' ? following : mutualFriends;
+
+  const filterUsers = (users) =>
+    users.filter((user) => user.username.toLowerCase().includes(search.toLowerCase()));
 
   const handleLoadMore = () => {
     if (hasNextPage) {
@@ -26,8 +31,15 @@ const UserList = ({
 
   return (
     <Box>
+      <TextField
+        label="Search Profiles"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        fullWidth
+        sx={{ mb: 2 }}
+      />
       <List>
-        {users.map((user) => (
+        {filterUsers(users).map((user) => (
           <UserListItem
             key={user.id}
             user={user}

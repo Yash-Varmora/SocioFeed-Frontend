@@ -1,0 +1,52 @@
+.ProseMirror {
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-height: 150px;
+
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+  background-color: white;
+  outline: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1em 0 0.5em;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+
+.ProseMirror h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+
+.ProseMirror ul {
+  list-style-type: disc;
+  padding-left: 2rem;
+  margin: 1em 0;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal;
+  padding-left: 2rem;
+  margin: 1em 0;
+}
+
+.ProseMirror li {
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}

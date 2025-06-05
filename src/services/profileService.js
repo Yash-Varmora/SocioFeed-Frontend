@@ -17,3 +17,8 @@ export const uploadAvatar = async (formData, onUploadProgress) => {
   });
   return response.data;
 };
+
+export const getUserPosts = async (username) => {
+  const response = await api.get(`/profile/${username}/posts`);
+  return response.data;
+};

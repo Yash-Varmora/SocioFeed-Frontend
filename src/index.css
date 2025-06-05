@@ -1,3 +1,5 @@
+@import './components/post/postEditor/tiptap.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

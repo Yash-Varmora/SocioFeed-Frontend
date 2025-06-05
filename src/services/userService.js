@@ -1,6 +1,6 @@
 import api from '../api/axiosInstance';
 
-export const searchUsers = async ({ query, page }) => {
+export const searchUsers = async ({ query, page, limit }) => {
   if (!query) {
     return {
       data: {
@@ -11,7 +11,7 @@ export const searchUsers = async ({ query, page }) => {
       },
     };
   }
-  const response = await api.post(`/users/search?page=${page}`, { query });
+  const response = await api.post(`/users/search?page=${page}&limit=${limit}`, { query });
   return response.data;
 };
 

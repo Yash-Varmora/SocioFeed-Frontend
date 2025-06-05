@@ -6,7 +6,7 @@ import useLogout from '../../hooks/useLogout';
 import SidebarHeader from './SidebarHeader';
 import SidebarItem from './SidebarItem';
 import { FaHome, FaSearch } from 'react-icons/fa';
-import { MdOutlineLogout } from 'react-icons/md';
+import { MdNotifications, MdOutlineLogout } from 'react-icons/md';
 import { AVATAR_URL } from '../../constants';
 
 const drawerWidthOpen = 250;
@@ -42,6 +42,11 @@ const Sidebar = () => {
       label: 'Search',
       icon: <FaSearch size={28} />,
       onClick: () => navigate('/search'),
+    },
+    {
+      label: 'Notifications',
+      icon: <MdNotifications size={28} />,
+      onClick: () => navigate('/notifications'),
     },
     {
       label: 'Logout',

@@ -27,6 +27,7 @@ import useMutualFriends from '../../hooks/useMutualFriends';
 import useFollow from '../../hooks/useFollow';
 import Modal from '../../components/follow/Modal';
 import { AVATAR_URL } from '../../constants';
+import Post from '../../components/post/Post';
 
 const Profile = () => {
   const { username } = useParams();
@@ -45,7 +46,10 @@ const Profile = () => {
   const [socialModalOpen, setSocialModalOpen] = useState(false);
   const [socialModalTab, setSocialModalTab] = useState('followers');
 
-  const { profile, isLoading, error, updateMutation } = useProfileData(username, navigate);
+  const { profile, isLoading, error, updateMutation, userPosts, postsLoading } = useProfileData(
+    username,
+    navigate,
+  );
   const { uploadMutation, uploadProgress } = useAvatarUpload(username, () =>
     setIsEditingPicture(false),
   );
@@ -257,6 +261,19 @@ const Profile = () => {
           />
         )}
       </div>
+
+      <Typography variant="h5" sx={{ my: 4 }}>
+        Posts
+      </Typography>
+      {postsLoading ? (
+        <Box sx={{ textAlign: 'center' }}>
+          <CircularProgress />
+        </Box>
+      ) : userPosts?.length > 0 ? (
+        userPosts.map((post) => <Post key={post.id} post={post} />)
+      ) : (
+        <Typography>No posts yet</Typography>
+      )}
 
       <CropDialog
         open={openCropDialog}
