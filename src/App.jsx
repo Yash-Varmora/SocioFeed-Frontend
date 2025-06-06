@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Toast from './components/common/Toast';
-import useAuthCheck from './hooks/useAuthCheck';
 import { Box, CircularProgress, CssBaseline } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Sidebar from './components/sidebar/Sidebar';
 import AppRoutes from './routes/AppRoutes';
+import useAuthCheck from './hooks/auth/useAuthCheck';
 
 const App = () => {
   const { isLoading } = useAuthCheck();

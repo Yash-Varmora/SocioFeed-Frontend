@@ -7,9 +7,9 @@ import {
   ListItemText,
 } from '@mui/material';
 import React from 'react';
-import useFollow from '../../hooks/useFollow';
 import { AVATAR_URL } from '../../constants';
 import { useSelector } from 'react-redux';
+import useFollow from '../../hooks/useFollow';
 
 const UserListItem = ({ user, onUserClick, currentProfileUsername }) => {
   const { user: currentUser } = useSelector((state) => state.auth);

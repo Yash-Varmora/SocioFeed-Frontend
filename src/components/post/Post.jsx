@@ -1,16 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DOMPurify from 'dompurify';
-import { Box, Button } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import UserInfo from './UserInfo';
 import TaggedUsers from './TaggedUsers';
 import HashtagList from './HashtagList';
 import PostMedia from './PostMedia';
 import ActionButtons from './ActionButtons';
+import { useSelector } from 'react-redux';
+import { useDeletePost } from '../../hooks/post/useDelete';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ post }) => {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const contentRef = useRef(null);
+  const { mutate: deletePost, isLoading: isDeleting } = useDeletePost();
+  const [openDialog, setOpenDialog] = useState(false);
+  const currentUser = useSelector((state) => state.auth.user);
 
   const sanitizeContent = (content) => {
     if (!content) {
@@ -42,13 +57,19 @@ const Post = ({ post }) => {
   useEffect(() => {
     const el = contentRef.current;
     if (el && !isExpanded) {
-      const isClamped = el.scrollHeight > el.clientHeight + 1; // +1 for precision buffer
+      const isClamped = el.scrollHeight > el.clientHeight + 1;
       setIsOverflowing(isClamped);
     }
   }, [sanitizedContent, isExpanded]);
 
   const handleToggle = () => setIsExpanded(!isExpanded);
 
+  const handleDelete = () => {
+    deletePost(post.id);
+    setOpenDialog(false);
+  };
+
+  const isOwner = currentUser?.id === post.user.id;
   return (
     <Box
       sx={{
@@ -72,7 +93,23 @@ const Post = ({ post }) => {
       }}
     >
       <UserInfo user={post?.user} createdAt={post?.createdAt} visibility={post?.visibility} />
-
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        {isOwner && (
+          <>
+            <Button variant="outlined" onClick={() => navigate(`/post/${post.id}/edit`)}>
+              Edit
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setOpenDialog(true)}
+              disabled={isDeleting}
+            >
+              Delete
+            </Button>
+          </>
+        )}
+      </Box>
       <Box
         ref={contentRef}
         sx={{
@@ -95,6 +132,21 @@ const Post = ({ post }) => {
       {post?.postHashtags?.length > 0 && <HashtagList hashtags={post.postHashtags} />}
       {post?.postMedia.length > 0 && <PostMedia media={post?.postMedia} />}
       <ActionButtons likeCount={post?.likeCount} commentCount={post?.commentCount} />
+
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this post? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+          <Button onClick={handleDelete} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

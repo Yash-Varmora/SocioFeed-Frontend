@@ -4,7 +4,7 @@ import { setCredentials } from '../../store/slices/authSlice';
 import { toast } from 'react-toastify';
 import Form from './Form';
 import { loginSchema } from '../../schemas/authSchemas';
-import { useGoogleLoginHandler } from '../../hooks/useGoogleLoginHandler';
+import { useGoogleLoginHandler } from '../../hooks/auth/useGoogleLoginHandler';
 import { GoogleLogin } from '@react-oauth/google';
 import { loginUser } from '../../services/authService';
 

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { setCredentials } from '../store/slices/authSlice';
-import { getUser } from '../services/authService';
+import { setCredentials } from '../../store/slices/authSlice';
+import { getUser } from '../../services/authService';
 
 function useAuthCheck() {
   const dispatch = useDispatch();

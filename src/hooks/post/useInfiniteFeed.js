@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchFeed } from '../services/postService';
+import { fetchFeed } from '../../services/postService';
 import { toast } from 'react-toastify';
 
 function useInfiniteFeed(username) {

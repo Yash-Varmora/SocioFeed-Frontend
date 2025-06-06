@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { setCredentials } from '../store/slices/authSlice';
-import { googleLogin } from '../services/authService';
+import { setCredentials } from '../../store/slices/authSlice';
+import { googleLogin } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
 
 export const useGoogleLoginHandler = () => {

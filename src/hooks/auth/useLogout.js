@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../services/authService';
+import { logoutUser } from '../../services/authService';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
-import { logout } from '../store/slices/authSlice';
+import { logout } from '../../store/slices/authSlice';
 
 const useLogout = () => {
   const dispatch = useDispatch();

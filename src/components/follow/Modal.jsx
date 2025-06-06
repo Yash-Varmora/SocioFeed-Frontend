@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import useFollowers from '../../hooks/useFollowers';
-import useFollowing from '../../hooks/useFollowing';
-import useMutualFriends from '../../hooks/useMutualFriends';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import UserList from './UserList';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CustomTabs from './CustomTabs';
 import { useQueryClient } from '@tanstack/react-query';
+import useFollowers from '../../hooks/profile/useFollowers';
+import useFollowing from '../../hooks/profile/useFollowing';
+import useMutualFriends from '../../hooks/profile/useMutualFriends';
 
 const Modal = ({ open, onClose, username, initialTab, isOwnProfile }) => {
   const navigate = useNavigate();

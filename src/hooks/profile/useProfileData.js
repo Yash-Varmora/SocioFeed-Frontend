@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { getProfile, getUserPosts, updateProfile } from '../services/profileService';
+import { getProfile, getUserPosts, updateProfile } from '../../services/profileService';
 
 export const useProfileData = (username, navigate) => {
   const queryClient = useQueryClient();

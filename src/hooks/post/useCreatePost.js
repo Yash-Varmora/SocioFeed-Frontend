@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { createPost } from '../services/postService';
+import { createPost } from '../../services/postService';
 import { toast } from 'react-toastify';
 
 export function useCreatePost() {

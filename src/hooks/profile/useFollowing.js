@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchFollowers } from '../services/userService';
+import { fetchFollowing } from '../../services/userService';
 import { toast } from 'react-toastify';
 
-function useFollowers(username) {
+function useFollowing(username) {
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ['followers', username],
+      queryKey: ['following', username],
       queryFn: ({ pageParam = 1 }) =>
-        fetchFollowers({ username, page: pageParam }).then((res) => res.data),
+        fetchFollowing({ username, page: pageParam }).then((res) => res.data),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
         return nextPage <= lastPage.pages ? nextPage : undefined;
@@ -15,11 +15,11 @@ function useFollowers(username) {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch followers');
+    toast.error(error.response?.data?.error || 'Failed to fetch following');
   }
-  const allFollowers = data?.pages.flatMap((page) => page.followers) || [];
+  const allFollowing = data?.pages.flatMap((page) => page.following) || [];
   return {
-    followers: allFollowers,
+    following: allFollowing,
     isLoading,
     fetchNextPage,
     hasNextPage,
@@ -29,4 +29,4 @@ function useFollowers(username) {
   };
 }
 
-export default useFollowers;
+export default useFollowing;

@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { fetchMutualFriends } from '../services/userService';
+import { fetchMutualFriends } from '../../services/userService';
 
 function useMutualFriends(username, isOwnProfile) {
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =

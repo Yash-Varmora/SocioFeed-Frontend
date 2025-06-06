@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchHashtagSuggestions } from '../services/hashtagService';
+import { fetchHashtagSuggestions } from '../../services/hashtagService';
 import { toast } from 'react-toastify';
 
 function useHashtagSuggestions(query) {

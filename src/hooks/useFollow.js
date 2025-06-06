@@ -121,6 +121,7 @@ function useFollow(followedId, username, currentProfileUsername) {
         queryClient.invalidateQueries({ queryKey: ['followers', user.username] });
       }
       queryClient.invalidateQueries({ queryKey: ['profile', user.username] });
+      queryClient.invalidateQueries({ queryKey: ['userPosts'] });
 
       toast.success('Followed successfully');
     },
@@ -246,6 +247,7 @@ function useFollow(followedId, username, currentProfileUsername) {
         queryClient.invalidateQueries({ queryKey: ['following', user.username] });
       }
       queryClient.invalidateQueries({ queryKey: ['profile', user.username] });
+      queryClient.invalidateQueries({ queryKey: ['userPosts'] });
 
       toast.success('Unfollowed successfully');
     },

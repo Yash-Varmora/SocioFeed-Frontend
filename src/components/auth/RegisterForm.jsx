@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import Form from './Form';
 import { registerSchema } from '../../schemas/authSchemas';
 import { registerUser } from '../../services/authService';
-import { useGoogleLoginHandler } from '../../hooks/useGoogleLoginHandler';
+import { useGoogleLoginHandler } from '../../hooks/auth/useGoogleLoginHandler';
 import { GoogleLogin } from '@react-oauth/google';
 
 const RegisterForm = ({ onSuccess }) => {

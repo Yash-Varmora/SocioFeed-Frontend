@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
   Activate,
+  CreatePost,
+  EditPost,
   ForgotPassword,
   Home,
   Login,
@@ -22,6 +24,8 @@ const AppRoutes = () => {
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/search" element={<Search />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/post/:id/edit" element={<EditPost />} />
       </Route>
       <Route element={<RestrictedRoute />}>
         <Route path="/login" element={<Login />} />

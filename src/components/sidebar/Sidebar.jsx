@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Avatar, Divider, Drawer, List } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import useLogout from '../../hooks/useLogout';
 import SidebarHeader from './SidebarHeader';
 import SidebarItem from './SidebarItem';
 import { FaHome, FaSearch } from 'react-icons/fa';
 import { MdNotifications, MdOutlineLogout } from 'react-icons/md';
 import { AVATAR_URL } from '../../constants';
+import useLogout from '../../hooks/auth/useLogout';
 
 const drawerWidthOpen = 250;
 const drawerWidthClosed = 72;

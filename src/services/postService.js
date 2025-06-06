@@ -1,10 +1,6 @@
 import api from '../api/axiosInstance';
 
 export const createPost = async ({ content, visibility, media, taggedUserIds, hashtags }) => {
-  console.log('Creating post with content:', content);
-  console.log('Visibility:', visibility);
-  console.log('Tagged User IDs:', taggedUserIds);
-  console.log('Media:', media);
   const formData = new FormData();
   formData.append('content', content);
   formData.append('visibility', visibility);
@@ -27,5 +23,20 @@ export const createPost = async ({ content, visibility, media, taggedUserIds, ha
 
 export const fetchFeed = async ({ pageParam }) => {
   const response = await api.get(`/posts/feed?page=${pageParam}`);
+  return response.data;
+};
+
+export const getPostById = async (id) => {
+  const response = await api.get(`/posts/${id}`);
+  return response.data;
+};
+
+export const updatePost = async ({ id, content, visibility }) => {
+  const response = await api.put(`/posts/${id}`, { content, visibility });
+  return response.data;
+};
+
+export const deletePost = async (id) => {
+  const response = await api.delete(`/posts/${id}`);
   return response.data;
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import useInfiniteScroll from '../../hooks/post/useInfiniteScroll';
 import Post from '../post/Post';
 import { Box, CircularProgress, Typography } from '@mui/material';
 

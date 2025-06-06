@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { uploadAvatar } from '../services/profileService';
+import { uploadAvatar } from '../../services/profileService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '../store/slices/authSlice';
+import { setCredentials } from '../../store/slices/authSlice';
 
 export const useAvatarUpload = (username, onUploadSuccess) => {
   const queryClient = useQueryClient();

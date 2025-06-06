@@ -1,17 +1,17 @@
 import { Box, Button, CircularProgress, MenuItem, Select } from '@mui/material';
 import React, { useState } from 'react';
-import useMediaHandler from '../../../hooks/useMediaHandler';
-import useEditors from '../../../hooks/useEditors';
-import { useCreatePost } from '../../../hooks/useCreatePost';
+import useMediaHandler from '../../../hooks/post/useMediaHandler';
+import useEditors from '../../../hooks/post/useEditors';
+import { useCreatePost } from '../../../hooks/post/useCreatePost';
 import useSearchUsers from '../../../hooks/useSearchUsers';
 import { toast } from 'react-toastify';
 import Editor from './Editor';
 import TagUserSelect from './TagUserSelect';
 import MediaUploader from './MediaUploader';
-import useHashtagSuggestions from '../../../hooks/useHashtagSuggestions';
+import useHashtagSuggestions from '../../../hooks/post/useHashtagSuggestions';
 import HashTagSelect from './HashTagSelect';
 
-const PostEditor = () => {
+const PostEditor = ({ onSuccess }) => {
   const [visibility, setVisibility] = useState('PUBLIC');
   const { media, setMedia, onDrop, removeMedia } = useMediaHandler();
   const editor = useEditors();
@@ -46,6 +46,9 @@ const PostEditor = () => {
           setHashtags([]);
           setVisibility('PUBLIC');
           setMedia([]);
+          if (onSuccess) {
+            onSuccess();
+          }
         },
       },
     );
