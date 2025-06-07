@@ -159,6 +159,7 @@ const Profile = () => {
           bio={profile.bio}
           followers={profile.totalFollowers}
           following={profile.totalFollowing}
+          post={userPosts?.length || 0}
           openModal={(tab) => openSocialModal(tab)}
         />
         {!isOwnProfile && (

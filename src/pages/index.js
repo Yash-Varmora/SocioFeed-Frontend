@@ -1,4 +1,4 @@
-import { Home, CreatePost, EditPost } from './post';
+import { Home, CreatePost, EditPost, SavedPosts } from './post';
 import { Login, Activate, ForgotPassword, Register, ResetPassword } from './auth';
 import { Profile } from './profile';
 import { Search } from './search';
@@ -16,4 +16,5 @@ export {
   Notifications,
   CreatePost,
   EditPost,
+  SavedPosts,
 };

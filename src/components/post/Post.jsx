@@ -17,6 +17,9 @@ import ActionButtons from './ActionButtons';
 import { useSelector } from 'react-redux';
 import { useDeletePost } from '../../hooks/post/useDelete';
 import { useNavigate } from 'react-router-dom';
+import useLike from '../../hooks/post/useLike';
+import useSave from '../../hooks/post/useSave';
+import LikeModel from './LikeModel';
 
 const Post = ({ post }) => {
   const navigate = useNavigate();
@@ -26,6 +29,9 @@ const Post = ({ post }) => {
   const { mutate: deletePost, isLoading: isDeleting } = useDeletePost();
   const [openDialog, setOpenDialog] = useState(false);
   const currentUser = useSelector((state) => state.auth.user);
+  const { like, unlike } = useLike(post?.id);
+  const { savePost, unsavePost } = useSave(post?.id);
+  const [openLikesModal, setOpenLikesModal] = useState(false);
 
   const sanitizeContent = (content) => {
     if (!content) {
@@ -69,7 +75,23 @@ const Post = ({ post }) => {
     setOpenDialog(false);
   };
 
-  const isOwner = currentUser?.id === post.user.id;
+  const handleLikeToggle = () => {
+    if (post.isLike) {
+      unlike();
+    } else {
+      like();
+    }
+  };
+
+  const handleSaveToggle = () => {
+    if (post.isSaved) {
+      unsavePost();
+    } else {
+      savePost();
+    }
+  };
+
+  const isOwner = currentUser?.id === post?.user.id;
   return (
     <Box
       sx={{
@@ -92,23 +114,25 @@ const Post = ({ post }) => {
         '& br': { display: 'block', content: '""', margin: '0.5em 0' },
       }}
     >
-      <UserInfo user={post?.user} createdAt={post?.createdAt} visibility={post?.visibility} />
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        {isOwner && (
-          <>
-            <Button variant="outlined" onClick={() => navigate(`/post/${post.id}/edit`)}>
-              Edit
-            </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={() => setOpenDialog(true)}
-              disabled={isDeleting}
-            >
-              Delete
-            </Button>
-          </>
-        )}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <UserInfo user={post?.user} createdAt={post?.createdAt} visibility={post?.visibility} />
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {isOwner && (
+            <>
+              <Button variant="outlined" onClick={() => navigate(`/post/${post.id}/edit`)}>
+                Edit
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => setOpenDialog(true)}
+                disabled={isDeleting}
+              >
+                Delete
+              </Button>
+            </>
+          )}
+        </Box>
       </Box>
       <Box
         ref={contentRef}
@@ -129,9 +153,17 @@ const Post = ({ post }) => {
       )}
 
       {post?.tagsInPosts?.length > 0 && <TaggedUsers tags={post?.tagsInPosts} />}
-      {post?.postHashtags?.length > 0 && <HashtagList hashtags={post.postHashtags} />}
+      {post?.postHashtags?.length > 0 && <HashtagList hashtags={post?.postHashtags} />}
       {post?.postMedia.length > 0 && <PostMedia media={post?.postMedia} />}
-      <ActionButtons likeCount={post?.likeCount} commentCount={post?.commentCount} />
+      <ActionButtons
+        likeCount={post?.likeCount}
+        commentCount={post?.commentCount}
+        isLiked={post?.isLike}
+        isPostSaved={post?.isSaved}
+        onLikeClick={handleLikeToggle}
+        onSavePostClick={handleSaveToggle}
+        openLikesModal={setOpenLikesModal}
+      />
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -147,6 +179,7 @@ const Post = ({ post }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <LikeModel open={openLikesModal} onClose={() => setOpenLikesModal(false)} postId={post?.id} />
     </Box>
   );
 };

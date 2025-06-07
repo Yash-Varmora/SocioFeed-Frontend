@@ -115,6 +115,33 @@ function useFollow(followedId, username, currentProfileUsername) {
         };
       });
 
+      queryClient.setQueriesData({ queryKey: ['postLikes'] }, (oldData) => {
+        if (!oldData) {
+          return oldData;
+        }
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            data: {
+              ...page.data,
+              users: page.data.users.map((likeUser) => {
+                if (likeUser.id === followedId) {
+                  return {
+                    ...likeUser,
+                    followsFollowing: [
+                      ...(likeUser.followsFollowing || []),
+                      { followerId: user.id },
+                    ],
+                  };
+                }
+                return likeUser;
+              }),
+            },
+          })),
+        };
+      });
+
       if (user.username !== currentProfileUsername) {
         queryClient.invalidateQueries({ queryKey: ['following', user.username] });
         queryClient.invalidateQueries({ queryKey: ['mutualFriends', user.username] });
@@ -239,6 +266,32 @@ function useFollow(followedId, username, currentProfileUsername) {
               }
               return friend;
             }),
+          })),
+        };
+      });
+
+      queryClient.setQueriesData({ queryKey: ['postLikes'] }, (oldData) => {
+        if (!oldData) {
+          return oldData;
+        }
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            data: {
+              ...page.data,
+              users: page.data.users.map((likeUser) => {
+                if (likeUser.id === followedId) {
+                  return {
+                    ...likeUser,
+                    followsFollowing: (likeUser.followsFollowing || []).filter(
+                      (f) => f.followerId !== user.id,
+                    ),
+                  };
+                }
+                return likeUser;
+              }),
+            },
           })),
         };
       });

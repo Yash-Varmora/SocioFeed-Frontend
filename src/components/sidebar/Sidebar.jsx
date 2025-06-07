@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SidebarHeader from './SidebarHeader';
 import SidebarItem from './SidebarItem';
-import { FaHome, FaSearch } from 'react-icons/fa';
+import { FaBookmark, FaHome, FaPlusSquare, FaSearch } from 'react-icons/fa';
 import { MdNotifications, MdOutlineLogout } from 'react-icons/md';
 import { AVATAR_URL } from '../../constants';
 import useLogout from '../../hooks/auth/useLogout';
@@ -42,6 +42,16 @@ const Sidebar = () => {
       label: 'Search',
       icon: <FaSearch size={28} />,
       onClick: () => navigate('/search'),
+    },
+    {
+      label: 'Create Post',
+      icon: <FaPlusSquare size={28} />,
+      onClick: () => navigate('/create-post'),
+    },
+    {
+      label: 'Saved Posts',
+      icon: <FaBookmark size={28} />,
+      onClick: () => navigate('/saved-posts'),
     },
     {
       label: 'Notifications',

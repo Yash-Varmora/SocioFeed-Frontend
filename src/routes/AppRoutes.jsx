@@ -11,6 +11,7 @@ import {
   Profile,
   Register,
   ResetPassword,
+  SavedPosts,
   Search,
 } from '../pages';
 import RestrictedRoute from './RestrictedRoute';
@@ -26,6 +27,7 @@ const AppRoutes = () => {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/post/:id/edit" element={<EditPost />} />
+        <Route path="/saved-posts" element={<SavedPosts />} />
       </Route>
       <Route element={<RestrictedRoute />}>
         <Route path="/login" element={<Login />} />

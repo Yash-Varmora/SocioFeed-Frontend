@@ -40,3 +40,35 @@ export const deletePost = async (id) => {
   const response = await api.delete(`/posts/${id}`);
   return response.data;
 };
+
+export const likePost = async (id) => {
+  const response = await api.post(`/posts/${id}/like`);
+  return response.data;
+};
+
+export const unlikePost = async (id) => {
+  const response = await api.delete(`/posts/${id}/like`);
+  return response.data;
+};
+
+export const savePost = async (id) => {
+  const response = await api.post(`/posts/${id}/save`);
+  return response.data;
+};
+
+export const unsavePost = async (id) => {
+  const response = await api.delete(`/posts/${id}/save`);
+  return response.data;
+};
+
+export const fetchPostLikes = async ({ pageParam, postId, search }) => {
+  const response = await api.get(`/posts/${postId}/likes`, {
+    params: { page: pageParam, search },
+  });
+  return response.data;
+};
+
+export const fetchSavedPosts = async ({ pageParam }) => {
+  const response = await api.get(`/posts/saved?page=${pageParam}`);
+  return response.data;
+};

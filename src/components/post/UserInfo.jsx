@@ -15,7 +15,7 @@ const UserInfo = ({ user, createdAt, visibility }) => {
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
       <Avatar
         src={user?.avatarUrl || AVATAR_URL}
-        sx={{ mr: 2, cursor: 'pointer' }}
+        sx={{ mr: 2, width: 80, height: 80, cursor: 'pointer' }}
         onClick={() => navigate(`/profile/${user?.username}`)}
       />
       <Box>

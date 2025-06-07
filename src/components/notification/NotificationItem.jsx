@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getNotificationMessage } from '../../helpers/notificationUtils';
 import { formatDistanceToNow } from 'date-fns';
+import { AVATAR_URL } from '../../constants';
 
 const NotificationItem = ({ notification }) => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const NotificationItem = ({ notification }) => {
       <ListItemAvatar>
         <Box sx={{ position: 'relative' }}>
           <Avatar
-            src={notification.actor.avatarUrl || '/default-avatar.png'}
+            src={notification.actor.avatarUrl || AVATAR_URL}
             alt={notification.actor.username}
           />
         </Box>
