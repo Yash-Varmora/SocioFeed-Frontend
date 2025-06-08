@@ -10,6 +10,7 @@ const ActionButtons = ({
   onLikeClick,
   onSavePostClick,
   openLikesModal,
+  onCommentClick,
 }) => {
   const handleOpenLikesModelClick = (e) => {
     e.preventDefault();
@@ -43,11 +44,13 @@ const ActionButtons = ({
 
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title="Comment">
-          <IconButton color="primary">
+          <IconButton color="primary" onClick={onCommentClick}>
             <FaRegComment />
           </IconButton>
         </Tooltip>
-        <Typography variant="body2">{commentCount}</Typography>
+        <Typography variant="body2" onClick={onCommentClick} sx={{ cursor: 'pointer' }}>
+          {commentCount}
+        </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title={isPostSaved ? 'Unsave Post' : 'Save Post'}>

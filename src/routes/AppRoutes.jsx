@@ -16,6 +16,7 @@ import {
 } from '../pages';
 import RestrictedRoute from './RestrictedRoute';
 import ProtectedRoute from './ProtectedRoute';
+import PostDetail from '../pages/post/PostDetail';
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/post/:id/edit" element={<EditPost />} />
         <Route path="/saved-posts" element={<SavedPosts />} />
+        <Route path="/post/:id" element={<PostDetail />} />
       </Route>
       <Route element={<RestrictedRoute />}>
         <Route path="/login" element={<Login />} />

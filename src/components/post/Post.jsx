@@ -91,7 +91,11 @@ const Post = ({ post }) => {
     }
   };
 
-  const isOwner = currentUser?.id === post?.user.id;
+  const handleCommentClick = () => {
+    navigate(`/post/${post.id}`, { state: { focusCommentInput: true } });
+  };
+
+  const isOwner = currentUser?.id === post?.user?.id;
   return (
     <Box
       sx={{
@@ -135,6 +139,7 @@ const Post = ({ post }) => {
         </Box>
       </Box>
       <Box
+        onClick={() => navigate(`/post/${post.id}`)}
         ref={contentRef}
         sx={{
           mb: 2,
@@ -154,7 +159,7 @@ const Post = ({ post }) => {
 
       {post?.tagsInPosts?.length > 0 && <TaggedUsers tags={post?.tagsInPosts} />}
       {post?.postHashtags?.length > 0 && <HashtagList hashtags={post?.postHashtags} />}
-      {post?.postMedia.length > 0 && <PostMedia media={post?.postMedia} />}
+      {post?.postMedia?.length > 0 && <PostMedia media={post?.postMedia} />}
       <ActionButtons
         likeCount={post?.likeCount}
         commentCount={post?.commentCount}
@@ -163,6 +168,7 @@ const Post = ({ post }) => {
         onLikeClick={handleLikeToggle}
         onSavePostClick={handleSaveToggle}
         openLikesModal={setOpenLikesModal}
+        onCommentClick={handleCommentClick}
       />
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
