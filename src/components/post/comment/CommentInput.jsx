@@ -27,17 +27,22 @@ const CommentInput = ({ postId, parentCommentId, onSubmit, onCancel, autoFocus =
     if (!content.trim()) {
       return;
     }
-    createComment(
-      { content, taggedUserIds: mentionIds },
-      {
-        onSuccess: () => {
-          setContent('');
-          setMentionIds([]);
-          setSearchQuery('');
-          onSubmit?.();
-        },
-      },
-    );
+    createComment({ content, taggedUserIds: mentionIds });
+    setContent('');
+    setMentionIds([]);
+    setSearchQuery('');
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
+
+  const handleCancel = () => {
+    setContent('');
+    setMentionIds([]);
+    setSearchQuery('');
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   const mentionStyle = {
@@ -132,7 +137,7 @@ const CommentInput = ({ postId, parentCommentId, onSubmit, onCancel, autoFocus =
           {isLoading ? <CircularProgress size={18} /> : 'Post'}
         </Button>
         {onCancel && (
-          <Button variant="outlined" size="small" onClick={onCancel} disabled={isLoading}>
+          <Button variant="outlined" size="small" onClick={handleCancel} disabled={isLoading}>
             Cancel
           </Button>
         )}

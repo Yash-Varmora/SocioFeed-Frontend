@@ -18,7 +18,7 @@ const PostDetail = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteComments(id);
+  } = useInfiniteComments(id, null);
   const commentInputRef = useRef(null);
   const { ref, inView } = useInView();
 

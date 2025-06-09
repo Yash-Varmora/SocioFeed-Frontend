@@ -4,7 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import useComment from '../../../hooks/post/useComment';
 import useInfiniteComments from '../../../hooks/post/useInfiniteComments';
 import { useInView } from 'react-intersection-observer';
-import { Avatar, Box, Button, CircularProgress, Typography, Stack } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
 import { AVATAR_URL } from '../../../constants';
 import { formatDistanceToNow } from 'date-fns';
 import CommentContent from './CommentContent';
@@ -18,6 +29,7 @@ const Comment = ({ comment, postId, level = 0 }) => {
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const {
     deleteComment,
@@ -56,22 +68,27 @@ const Comment = ({ comment, postId, level = 0 }) => {
     setIsEditing(false);
   };
 
-  const handleDelete = () => {
+  const handleDeleteClick = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
     deleteComment({ id: comment.id });
+    setDeleteDialogOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteDialogOpen(false);
   };
 
   return (
     <Box
       sx={{
-        pl: Math.min(4, level * 2),
+        pl: 3,
         pr: 1,
         pt: 2,
         pb: 1.5,
-        borderRadius: 2,
         bgcolor: isOwnComment ? 'grey.100' : 'white',
-        boxShadow: isOwnComment ? 1 : 0,
-        mb: 1.5,
-        borderLeft: level > 0 ? '2px solid #ddd' : 'none',
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center" mb={1} ml={1}>
@@ -109,7 +126,7 @@ const Comment = ({ comment, postId, level = 0 }) => {
         isOwnComment={isOwnComment}
         isLiked={isLiked}
         handleLikeToggle={handleLikeToggle}
-        handleDelete={handleDelete}
+        handleDelete={handleDeleteClick}
         setIsEditing={setIsEditing}
         setShowReplyInput={setShowReplyInput}
         showReplyInput={showReplyInput}
@@ -121,7 +138,10 @@ const Comment = ({ comment, postId, level = 0 }) => {
           <CommentInput
             postId={postId}
             parentCommentId={comment.id}
-            onSubmit={() => setShowReplies(true)}
+            onSubmit={() => {
+              setShowReplies(true);
+              setShowReplyInput(false);
+            }}
             onCancel={() => setShowReplyInput(false)}
           />
         </Box>
@@ -161,6 +181,23 @@ const Comment = ({ comment, postId, level = 0 }) => {
           </Box>
         </Box>
       )}
+      <Dialog open={deleteDialogOpen} onClose={handleCancelDelete}>
+        <DialogTitle>Delete Comment</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this comment?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button
+            onClick={handleConfirmDelete}
+            color="error"
+            variant="contained"
+            disabled={isCommentActionLoading}
+          >
+            {isCommentActionLoading ? 'Deleting...' : 'Delete'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
