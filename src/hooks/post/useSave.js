@@ -26,7 +26,7 @@ function useSave(postId) {
     },
     onError: (error, variables, context) => {
       queryClient.setQueryData(['feed'], context.previousFeed);
-      toast.error(error.response?.data?.error || 'Failed to save post');
+      toast.error(error.response?.data?.message || 'Failed to save post');
     },
     onSettled: () => {
       queryClient.invalidateQueries(['feed']);
@@ -54,7 +54,7 @@ function useSave(postId) {
     },
     onError: (error, variables, context) => {
       queryClient.setQueryData(['feed'], context.previousFeed);
-      toast.error(error.response?.data?.error || 'Failed to unsave post');
+      toast.error(error.response?.data?.message || 'Failed to unsave post');
     },
     onSettled: () => {
       queryClient.invalidateQueries(['feed']);

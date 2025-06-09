@@ -13,7 +13,7 @@ export function useUpdatePost() {
       toast.success('Post updated successfully!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to update post');
+      toast.error(error.response?.data?.message || 'Failed to update post');
     },
   });
 }

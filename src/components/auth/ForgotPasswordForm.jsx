@@ -11,7 +11,7 @@ const ForgotPasswordForm = ({ onSuccess }) => {
       toast.success('Password reset email sent!');
       onSuccess();
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Request failed');
+      toast.error(error.response?.data?.message || 'Request failed');
     }
   };
 

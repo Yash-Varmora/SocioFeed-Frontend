@@ -15,7 +15,7 @@ const Activate = () => {
         toast.success('Account activated! Please login.');
         navigate('/login');
       } catch (error) {
-        toast.error(error.response?.data?.error || 'Activation failed');
+        toast.error(error.response?.data?.message || 'Activation failed');
         navigate('/register');
       }
     };

@@ -1,7 +1,8 @@
-import { Button, IconButton, Stack, Typography } from '@mui/material';
+import { Button, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import React from 'react';
 import { FaHeart, FaRegHeart, FaReply } from 'react-icons/fa';
 import { MdDelete, MdEdit } from 'react-icons/md';
+import { MAX_NESTING_LEVEL } from '../../../constants';
 
 const CommentActions = ({
   comment,
@@ -13,7 +14,9 @@ const CommentActions = ({
   setShowReplyInput,
   showReplyInput,
   isLoading,
+  level = 0,
 }) => {
+  const canReply = level + 1 < MAX_NESTING_LEVEL;
   return (
     <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 0.5, ml: 1 }}>
       <IconButton size="small" onClick={handleLikeToggle} disabled={isLoading} sx={{ p: 0.5 }}>
@@ -24,15 +27,30 @@ const CommentActions = ({
         {comment.likeCount ?? comment.commentLikes?.length ?? 0}
       </Typography>
 
-      <Button
-        size="small"
-        startIcon={<FaReply size={14} />}
-        onClick={() => setShowReplyInput(!showReplyInput)}
-        disabled={isLoading}
-        sx={{ textTransform: 'none', fontSize: '0.75rem', minWidth: 'auto', px: 1.2 }}
-      >
-        Reply
-      </Button>
+      {canReply ? (
+        <Button
+          size="small"
+          startIcon={<FaReply size={14} />}
+          onClick={() => setShowReplyInput(!showReplyInput)}
+          disabled={isLoading}
+          sx={{ textTransform: 'none', fontSize: '0.75rem', minWidth: 'auto', px: 1.2 }}
+        >
+          Reply
+        </Button>
+      ) : (
+        <Tooltip title="Max reply depth reached">
+          <span>
+            <Button
+              size="small"
+              startIcon={<FaReply size={14} />}
+              disabled
+              sx={{ textTransform: 'none', fontSize: '0.75rem', minWidth: 'auto', px: 1.2 }}
+            >
+              Reply
+            </Button>
+          </span>
+        </Tooltip>
+      )}
 
       {isOwnComment && (
         <>

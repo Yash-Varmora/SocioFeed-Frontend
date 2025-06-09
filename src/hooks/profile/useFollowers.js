@@ -15,7 +15,7 @@ function useFollowers(username) {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch followers');
+    toast.error(error.response?.data?.message || 'Failed to fetch followers');
   }
   const allFollowers = data?.pages.flatMap((page) => page.followers) || [];
   return {

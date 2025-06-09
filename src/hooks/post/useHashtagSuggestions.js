@@ -11,7 +11,7 @@ function useHashtagSuggestions(query) {
   });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch hashtag suggestions');
+    toast.error(error.response?.data?.message || 'Failed to fetch hashtag suggestions');
   }
 
   return {

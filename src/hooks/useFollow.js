@@ -153,7 +153,7 @@ function useFollow(followedId, username, currentProfileUsername) {
       toast.success('Followed successfully');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to follow user');
+      toast.error(error.response?.data?.message || 'Failed to follow user');
     },
   });
 
@@ -305,7 +305,7 @@ function useFollow(followedId, username, currentProfileUsername) {
       toast.success('Unfollowed successfully');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to unfollow user');
+      toast.error(error.response?.data?.message || 'Failed to unfollow user');
     },
   });
 

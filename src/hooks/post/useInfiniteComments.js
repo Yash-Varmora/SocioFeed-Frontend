@@ -17,7 +17,7 @@ function useInfiniteComments(postId, parentCommentId = null) {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch comments');
+    toast.error(error.response?.data?.message || 'Failed to fetch comments');
   }
   return {
     comments: data?.pages.flatMap((page) => page.data.comments) || [],

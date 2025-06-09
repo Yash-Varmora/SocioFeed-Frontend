@@ -19,7 +19,7 @@ const LoginForm = ({ onSuccess }) => {
       toast.success('Login successful!');
       onSuccess();
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Login failed');
+      toast.error(error.response?.data?.message || 'Login failed');
     }
   };
 

@@ -12,7 +12,7 @@ export function useCreatePost() {
       toast.success('Post created!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to create post');
+      toast.error(error.response?.data?.message || 'Failed to create post');
     },
   });
 }

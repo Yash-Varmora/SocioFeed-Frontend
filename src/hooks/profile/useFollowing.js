@@ -15,7 +15,7 @@ function useFollowing(username) {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch following');
+    toast.error(error.response?.data?.message || 'Failed to fetch following');
   }
   const allFollowing = data?.pages.flatMap((page) => page.following) || [];
   return {

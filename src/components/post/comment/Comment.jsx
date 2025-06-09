@@ -16,7 +16,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
-import { AVATAR_URL } from '../../../constants';
+import { AVATAR_URL, MAX_NESTING_LEVEL } from '../../../constants';
 import { formatDistanceToNow } from 'date-fns';
 import CommentContent from './CommentContent';
 import CommentActions from './CommentActions';
@@ -84,7 +84,7 @@ const Comment = ({ comment, postId, level = 0 }) => {
   return (
     <Box
       sx={{
-        pl: 3,
+        pl: level === 0 ? 2 : 6,
         pr: 1,
         pt: 2,
         pb: 1.5,
@@ -131,6 +131,7 @@ const Comment = ({ comment, postId, level = 0 }) => {
         setShowReplyInput={setShowReplyInput}
         showReplyInput={showReplyInput}
         isLoading={isCommentActionLoading}
+        level={level}
       />
 
       {showReplyInput && (
@@ -168,9 +169,18 @@ const Comment = ({ comment, postId, level = 0 }) => {
               <CircularProgress size={20} />
             </Box>
           )}
-          {replies.map((reply) => (
-            <Comment key={reply.id} comment={reply} postId={postId} level={level + 1} />
-          ))}
+          {replies.map((reply) => {
+            if (level + 1 >= MAX_NESTING_LEVEL) {
+              return (
+                <Box key={reply.id} sx={{ ml: 3, mt: 1 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Max reply depth reached.
+                  </Typography>
+                </Box>
+              );
+            }
+            return <Comment key={reply.id} comment={reply} postId={postId} level={level + 1} />;
+          })}
           <Box ref={ref} sx={{ textAlign: 'center', mt: 1 }}>
             {isFetchingNextPage && <CircularProgress size={20} />}
             {!hasNextPage && replies.length > 0 && (

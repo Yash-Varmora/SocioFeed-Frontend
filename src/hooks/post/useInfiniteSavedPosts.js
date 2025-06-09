@@ -16,7 +16,7 @@ function useInfiniteSavedPosts() {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch saved posts');
+    toast.error(error.response?.data?.message || 'Failed to fetch saved posts');
   }
 
   return {

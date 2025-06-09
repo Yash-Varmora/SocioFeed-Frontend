@@ -19,7 +19,7 @@ function useComment(postId, parentCommentId = null) {
       toast.success('Comment posted!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to post comment');
+      toast.error(error.response?.data?.message || 'Failed to post comment');
     },
   });
 
@@ -30,7 +30,7 @@ function useComment(postId, parentCommentId = null) {
       toast.success('Comment updated!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to update comment');
+      toast.error(error.response?.data?.message || 'Failed to update comment');
     },
   });
 
@@ -42,7 +42,7 @@ function useComment(postId, parentCommentId = null) {
       toast.success('Comment deleted!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Failed to delete comment');
+      toast.error(error.response?.data?.message || 'Failed to delete comment');
     },
   });
 
@@ -71,7 +71,7 @@ function useComment(postId, parentCommentId = null) {
     },
     onError: (error, variables, context) => {
       queryClient.setQueryData(['comments'], context.previousComments);
-      toast.error(error.response?.data?.error || 'Failed to like comment');
+      toast.error(error.response?.data?.message || 'Failed to like comment');
     },
     onSettled: () => {
       queryClient.invalidateQueries(['comments']);
@@ -103,7 +103,7 @@ function useComment(postId, parentCommentId = null) {
     },
     onError: (error, variables, context) => {
       queryClient.setQueryData(['comments'], context.previousComments);
-      toast.error(error.response?.data?.error || 'Failed to unlike comment');
+      toast.error(error.response?.data?.message || 'Failed to unlike comment');
     },
     onSettled: () => {
       queryClient.invalidateQueries(['comments']);

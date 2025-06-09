@@ -28,7 +28,7 @@ const useSearchUsers = (limit = 2) => {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to search users');
+    toast.error(error.response?.data?.message || 'Failed to search users');
   }
 
   const allUsers = data?.pages.flatMap((page) => page.users) || [];

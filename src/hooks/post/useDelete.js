@@ -27,7 +27,7 @@ export function useDeletePost() {
     },
     onError: (error, _, context) => {
       queryClient.setQueryData(['feed'], context.previousPosts);
-      toast.error(error.response?.data?.error || 'Failed to delete post');
+      toast.error(error.response?.data?.message || 'Failed to delete post');
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['feed'] });

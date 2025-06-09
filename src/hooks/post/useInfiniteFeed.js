@@ -12,7 +12,7 @@ function useInfiniteFeed(username) {
     });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch feed');
+    toast.error(error.response?.data?.message || 'Failed to fetch feed');
   }
   return {
     posts: data?.pages.flatMap((page) => page.data.posts) || [],

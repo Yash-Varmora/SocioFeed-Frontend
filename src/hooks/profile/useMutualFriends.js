@@ -18,7 +18,7 @@ function useMutualFriends(username, isOwnProfile) {
 
   if (error) {
     console.log('Mutual friends error for:', username, error);
-    toast.error(error.response?.data?.error || 'Failed to fetch mutual friends');
+    toast.error(error.response?.data?.message || 'Failed to fetch mutual friends');
   }
   const allMutualFriends = data?.pages.flatMap((page) => page.mutualFriends) || [];
   return {

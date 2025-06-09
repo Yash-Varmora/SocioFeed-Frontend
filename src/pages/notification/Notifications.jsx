@@ -9,7 +9,7 @@ const Notifications = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error.response?.data?.error || 'Failed to fetch notifications');
+      toast.error(error.response?.data?.message || 'Failed to fetch notifications');
     }
   }, [error]);
 

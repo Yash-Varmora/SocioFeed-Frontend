@@ -9,7 +9,7 @@ function usePostById(postId) {
   });
 
   if (error) {
-    toast.error(error.response?.data?.error || 'Failed to fetch post');
+    toast.error(error.response?.data?.message || 'Failed to fetch post');
   }
 
   return { post: data, isLoading };

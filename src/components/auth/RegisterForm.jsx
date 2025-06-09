@@ -19,7 +19,7 @@ const RegisterForm = ({ onSuccess }) => {
       toast.success('Registration successful! Check your email to activate.');
       onSuccess();
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Registration failed');
+      toast.error(error.response?.data?.message || 'Registration failed');
     }
   };
 

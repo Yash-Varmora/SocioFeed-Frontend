@@ -11,7 +11,7 @@ const ResetPasswordForm = ({ token, onSuccess }) => {
       toast.success('Password reset successful! Please login.');
       onSuccess();
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Reset failed');
+      toast.error(error.response?.data?.message || 'Reset failed');
     }
   };
 

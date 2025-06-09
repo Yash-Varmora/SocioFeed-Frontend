@@ -28,7 +28,7 @@ function useLike(postId) {
     },
     onError: (error, variables, context) => {
       queryClient.setQueryData(['feed'], context.previousFeed);
-      toast.error(error.response?.data?.error || 'Failed to like post');
+      toast.error(error.response?.data?.message || 'Failed to like post');
     },
     onSettled: () => {
       queryClient.invalidateQueries(['feed']);
@@ -58,7 +58,7 @@ function useLike(postId) {
     },
     onError: (error, variables, context) => {
       queryClient.setQueryData(['feed'], context.previousFeed);
-      toast.error(error.response?.data?.error || 'Failed to unlike post');
+      toast.error(error.response?.data?.message || 'Failed to unlike post');
     },
     onSettled: () => {
       queryClient.invalidateQueries(['feed']);
