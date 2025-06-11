@@ -22,6 +22,7 @@ export const useAvatarUpload = (username, onUploadSuccess) => {
         ...oldData,
         avatarUrl: data.data.avatarUrl,
       }));
+
       toast.success('Avatar uploaded!');
       dispatch(
         setCredentials({
@@ -31,6 +32,7 @@ export const useAvatarUpload = (username, onUploadSuccess) => {
           },
         }),
       );
+      queryClient.invalidateQueries(['post']);
       setUploadProgress(0);
       onUploadSuccess();
     },

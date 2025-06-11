@@ -25,6 +25,14 @@ const PostEditor = ({ onSuccess }) => {
   const { suggestions: hashtagSuggestion, isLoading: hashtagsLoading } =
     useHashtagSuggestions(hashtagQuery);
 
+  const isPostButtonDisabled = () => {
+    const hasContent = editor?.getHTML() && editor.getHTML() !== '<p></p>';
+    const hasMedia = media.length > 0;
+    const hasHashtags = hashtags.length > 0;
+
+    return !hasContent && !hasMedia && !hasHashtags;
+  };
+
   const handleSubmit = () => {
     if (!editor?.getHTML()) {
       toast.error('Content is required');
@@ -82,7 +90,12 @@ const PostEditor = ({ onSuccess }) => {
         <MenuItem value="FRIENDS_ONLY">Friends Only</MenuItem>
         <MenuItem value="PRIVATE">Private</MenuItem>
       </Select>
-      <Button variant="contained" color="primary" onClick={handleSubmit} disabled={isLoading}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+        disabled={isLoading || isPostButtonDisabled()}
+      >
         {isLoading ? <CircularProgress size={24} /> : 'Post'}
       </Button>
     </Box>
