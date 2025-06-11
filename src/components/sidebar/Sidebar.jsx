@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import SidebarHeader from './SidebarHeader';
 import SidebarItem from './SidebarItem';
 import { FaBookmark, FaHome, FaPlusSquare, FaSearch } from 'react-icons/fa';
-import { MdNotifications, MdOutlineLogout } from 'react-icons/md';
+import { MdChatBubble, MdNotifications, MdOutlineLogout } from 'react-icons/md';
 import { AVATAR_URL } from '../../constants';
 import useLogout from '../../hooks/auth/useLogout';
 
@@ -52,6 +52,11 @@ const Sidebar = () => {
       label: 'Saved Posts',
       icon: <FaBookmark size={28} />,
       onClick: () => navigate('/saved-posts'),
+    },
+    {
+      label: 'Chat',
+      icon: <MdChatBubble size={28} />,
+      onClick: () => navigate('/chats'),
     },
     {
       label: 'Notifications',

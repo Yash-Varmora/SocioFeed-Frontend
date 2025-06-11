@@ -3,7 +3,7 @@ import { searchUsers } from '../services/userService';
 import { toast } from 'react-toastify';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const useSearchUsers = (limit = 2) => {
+const useSearchUsers = (limit = 20) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
 

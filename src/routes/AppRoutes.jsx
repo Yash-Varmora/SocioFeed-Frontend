@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   Activate,
+  Chat,
   CreatePost,
   EditPost,
   ForgotPassword,
@@ -30,6 +31,7 @@ const AppRoutes = () => {
         <Route path="/post/:id/edit" element={<EditPost />} />
         <Route path="/saved-posts" element={<SavedPosts />} />
         <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="/chats" element={<Chat />} />
       </Route>
       <Route element={<RestrictedRoute />}>
         <Route path="/login" element={<Login />} />
@@ -38,6 +40,7 @@ const AppRoutes = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/activate" element={<Activate />} />
       </Route>
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };

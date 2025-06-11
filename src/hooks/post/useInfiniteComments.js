@@ -8,12 +8,11 @@ function useInfiniteComments(postId, parentCommentId = null) {
       queryKey: ['comments', postId, parentCommentId],
       queryFn: ({ pageParam = 1 }) => fetchComments({ pageParam, postId, parentCommentId }),
       getNextPageParam: (lastPage) => {
-        if (lastPage.page < lastPage.pages) {
-          return lastPage.page + 1;
+        if (lastPage.data.page < lastPage.data.pages) {
+          return lastPage.data.page + 1;
         }
         return undefined;
       },
-      staleTime: 5 * 60 * 1000,
     });
 
   if (error) {
