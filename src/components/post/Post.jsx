@@ -158,7 +158,12 @@ const Post = ({ post }) => {
       )}
 
       {post?.tagsInPosts?.length > 0 && <TaggedUsers tags={post?.tagsInPosts} />}
-      {post?.postHashtags?.length > 0 && <HashtagList hashtags={post?.postHashtags} />}
+      {post?.postHashtags?.length > 0 && (
+        <HashtagList
+          hashtags={post?.postHashtags}
+          handleHashTagClick={() => navigate(`/post/${post.id}`)}
+        />
+      )}
       {post?.postMedia?.length > 0 && <PostMedia media={post?.postMedia} />}
       <ActionButtons
         likeCount={post?.likeCount}

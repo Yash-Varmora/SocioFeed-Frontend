@@ -1,10 +1,7 @@
 import { Box, Chip } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const HashtagList = ({ hashtags }) => {
-  const navigate = useNavigate();
-
+const HashtagList = ({ hashtags, handleHashTagClick }) => {
   return (
     <Box sx={{ mb: 2 }}>
       {hashtags.map((hashtag) => {
@@ -12,7 +9,7 @@ const HashtagList = ({ hashtags }) => {
           <Chip
             key={hashtag?.hashtag?.id}
             label={`#${hashtag?.hashtag?.tag}`}
-            onClick={() => navigate(`/hashtag/${hashtag?.tag}`)}
+            onClick={handleHashTagClick}
             sx={{ mr: 1, cursor: 'pointer' }}
           />
         );
