@@ -26,11 +26,7 @@ const ProfileHeader = ({
         <Typography color="text.secondary">{email}</Typography>
         <Typography>{bio || 'No bio yet'}</Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Typography
-            color="text.secondary"
-            sx={{ cursor: 'pointer' }}
-            onClick={() => openModal('posts')}
-          >
+          <Typography color="text.secondary" sx={{ cursor: 'pointer' }}>
             Posts: {post}
           </Typography>
           |
